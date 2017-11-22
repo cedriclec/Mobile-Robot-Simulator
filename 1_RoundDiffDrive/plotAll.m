@@ -19,8 +19,11 @@ function plotAll(model, env, userStructure)
     % draw environment
     drawEnvironment(env);
     
-    % draw obstacle
+    
+    %Comment Them if you want control faster
     drawObstacle(userStructure)
+    drawNodes(userStructure)
+
     hold off;
     axis equal;
     axis(env.plotArea);
@@ -133,7 +136,17 @@ function drawObstacle(userStructure)
     obst = userStructure.obstacleMap;
     obstSize = size(obst);
     for i = 1:obstSize(2)
-        plot([obst(1,i),obst(3,i)], [obst(2,i),obst(4,i)],'b');
+        plot([obst(1,i),obst(3,i)], [obst(2,i),obst(4,i)],'b-');
+    end
+    
+    return;
+end
+
+function drawNodes(userStructure)
+    node = userStructure.nodeMap;
+    nodeSize = size(node);
+    for i = 1:nodeSize(2)
+        plot(node(1,i),node(2,i),'r*');
     end
     
     return;

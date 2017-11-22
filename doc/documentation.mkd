@@ -2,18 +2,17 @@
 
 ##Todo
 
-1. Do the obstacle map
 
-    *    Should be done in the userInit file
-    *    Inflate the obstacle, to be sure than robot will not touch obstacle (Center robot should not touch big obstacle)
-
-1. PlotAll
-
-    * Add the obstacle map to the plot All
 
 1. Do the path planning
     
-    *    Should be done in the userInit file
+    1. Generate path between each node
+    1. Delete path which cross obstacles
+    1. Choice one techniques    
+    1. Choice only path from begin to end
+    1. Choice only shortest path
+    *    (Should be done in the userInit file)
+ 
 
 1. PlotAll
 
@@ -24,7 +23,24 @@
 
     * According to path planing and robot position implement the robot control
 
+1. Refactoring code (Improve, correct mistake, cleaner, more readable...)
 
+
+##Done 
+
+1. Do the obstacle map
+
+    *    Should be done in the userInit file
+    *    Inflate the obstacle, to be sure than robot will not touch obstacle (Center robot should not touch big obstacle)
+
+1. PlotAll
+
+    * Add the obstacle map to the plot All
+
+1. Do the path planning
+
+    1. Generate every nodes
+    1. Delete node which are in obstacle
 
 ##Variables
 #### Model
