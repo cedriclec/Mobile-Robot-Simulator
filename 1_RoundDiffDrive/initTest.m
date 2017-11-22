@@ -1,0 +1,2 @@
+load('hard.mat')
+main

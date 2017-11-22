@@ -1,0 +1,33 @@
+#Documentation Mobile Robot Simulator
+
+##Todo
+
+1. Do the obstacle map
+
+    *    Should be done in the userInit file
+    *    Inflate the obstacle, to be sure than robot will not touch obstacle (Center robot should not touch big obstacle)
+
+1. PlotAll
+
+    * Add the obstacle map to the plot All
+
+1. Do the path planning
+    
+    *    Should be done in the userInit file
+
+1. PlotAll
+
+    * Add the obstacleMap to see if path planing avoid obstacle (Well constructed)
+    * Add the path planning
+
+1. Do the control part
+
+    * According to path planing and robot position implement the robot control
+
+
+
+##Variables
+#### Model
+
+
+#### Environment

@@ -19,6 +19,8 @@ function plotAll(model, env, userStructure)
     % draw environment
     drawEnvironment(env);
     
+    % draw obstacle
+    drawObstacle(userStructure)
     hold off;
     axis equal;
     axis(env.plotArea);
@@ -122,6 +124,16 @@ function drawEnvironment(env)
     envSize = size(env.corner);
     for i = 1:envSize(2)
         plot([env.corner(1,i),env.corner(3,i)], [env.corner(2,i),env.corner(4,i)],'k-');
+    end
+    
+    return;
+end
+
+function drawObstacle(userStructure)
+    obst = userStructure.obstacleMap;
+    obstSize = size(obst);
+    for i = 1:obstSize(2)
+        plot([obst(1,i),obst(3,i)], [obst(2,i),obst(4,i)],'b');
     end
     
     return;
