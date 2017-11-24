@@ -146,7 +146,11 @@ function drawNodes(userStructure)
     node = userStructure.nodeMap;
     nodeSize = size(node);
     for i = 1:nodeSize(2)
-        plot(node(1,i),node(2,i),'r*');
+        if(node(4,i))
+            plot(node(1,i),node(2,i),'g*');
+        else
+            plot(node(1,i),node(2,i),'r*');
+        end
     end
     
     return;

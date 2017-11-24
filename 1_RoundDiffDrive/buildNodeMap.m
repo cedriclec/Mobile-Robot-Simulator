@@ -6,12 +6,12 @@ function nodeMap = buildNodeMap(model, environment, userStructure)
      yMin = environment.plotArea(3);
      YMax = environment.plotArea(4);
      nbNode = calcNbNodeMax(xMin, xMax, yMin, YMax, distBetweenNode);
-     
+
      %Do not want to start a point 0
      xMin = xMin + startGap ;  
      yMin = yMin + startGap;
-     
-     nodeMap = zeros(2, nbNode);
+
+     nodeMap = zeros(4, nbNode);
 
      currentNode = 0;
      for i = xMin : distBetweenNode : xMax
@@ -19,14 +19,22 @@ function nodeMap = buildNodeMap(model, environment, userStructure)
             currentNode = currentNode + 1;
             isInside = IsInsideObstacle(model, i,j,environment);
             if (isInside == 1)
-                nodeMap(currentNode) = 0;
-                currentNode = currentNode + 1;
-                nodeMap(currentNode) = 0;
+                nodeMap(1, currentNode) = -100;
+                %currentNode = currentNode + 1;
+                nodeMap(2, currentNode) = -100;
             else
-                nodeMap(currentNode) = i;
-                currentNode = currentNode + 1;
-                nodeMap(currentNode) = j;
+                nodeMap(1, currentNode) = i;
+                 %currentNode = currentNode + 1;
+                nodeMap(2, currentNode) = j;
             end
+                 %currentNode = currentNode + 1;
+                nodeMap(3, currentNode) = 0; %Not visited
+                 %currentNode = currentNode + 1;
+                if (isNearRobot(i, j, model))
+                    nodeMap(4, currentNode) = 1;
+                else
+                    nodeMap(4, currentNode) = 0;
+                end
         end
      end
 
