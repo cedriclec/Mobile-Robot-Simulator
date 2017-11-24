@@ -23,7 +23,7 @@ function plotAll(model, env, userStructure)
     %Comment Them if you want control faster
     drawObstacle(userStructure)
     drawNodes(userStructure)
-
+    drawPath(userStructure)
     hold off;
     axis equal;
     axis(env.plotArea);
@@ -146,10 +146,27 @@ function drawNodes(userStructure)
     node = userStructure.nodeMap;
     nodeSize = size(node);
     for i = 1:nodeSize(2)
-        if(node(4,i))
+        if(node(3,i))
             plot(node(1,i),node(2,i),'g*');
+        elseif(node(4,i))
+            plot(node(1,i),node(2,i),'y*');
         else
             plot(node(1,i),node(2,i),'r*');
+        end
+    end
+    
+    return;
+end
+
+function drawPath(userStructure)
+    pathMap = userStructure.pathMap;
+    node = userStructure.nodeMap;
+    pathSize = size(pathMap);
+    for i = 1:pathSize(2)
+        for j = 1 : 4
+            if(pathMap(j,i) > 0 )
+                plot([node(1,i),node(1,pathMap(j,i))], [node(2,i),node(2,pathMap(j,i))],'c--');
+            end
         end
     end
     

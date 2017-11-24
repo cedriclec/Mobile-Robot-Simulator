@@ -1,3 +1,65 @@
+function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, pathMap)
+    %Recursive way
+    %TODO add previous direction to avoid do circle\
+    
+     %TODO add COUT A LA MATRICE
+     %TODO INCREMENT AT EACH CALL FUNCTION
+%     pathMap
+%     size(pathMap)
+%     nodeIndice
+%     pathMap(5, nodeIndice);
+%     nodeIndice
+    if (  ( (testIfInsideeMap(nodeIndice, userStructure)) == 0) || (pathMap(5, nodeIndice)) )
+        %Already visited
+%         display('Has to return')
+        return ;
+     else    
+%         display('Has not')
+%         nodeIndice
+        leftGap = calcGap('left', userStructure, environment);
+        rightGap = calcGap('right', userStructure, environment);
+        downGap = calcGap('down', userStructure, environment);
+        upGap = calcGap('up', userStructure, environment);
+        leftIndice = 1;
+        rightIndice = 2;
+        downIndice = 3;
+        upIndice = 4;
+
+        %Left case
+        leftNode = nodeIndice + leftGap; 
+        if (testIfhaveToAddNextNode(nodeIndice, leftNode, leftIndice, userStructure, pathMap) )
+            pathMap(leftIndice, nodeIndice) = leftNode;
+            pathMap(rightIndice, leftNode) = userStructure.nullValue;                
+        end
+        %Right case
+        rightNode = nodeIndice + rightGap; 
+        if (testIfhaveToAddNextNode(nodeIndice, rightNode, rightIndice, userStructure, pathMap) )
+            pathMap(rightIndice, nodeIndice) = rightNode;
+            pathMap(leftIndice, rightNode) = userStructure.nullValue;                
+        end
+        %Down case
+        downNode = nodeIndice + downGap; 
+        if (testIfhaveToAddNextNode(nodeIndice, downNode, downIndice, userStructure, pathMap) )
+            pathMap(downIndice, nodeIndice) = downNode;
+            pathMap(upIndice, downNode) = userStructure.nullValue;                
+        end
+        %Up case
+        upNode = nodeIndice + upGap; 
+        if (testIfhaveToAddNextNode(nodeIndice, upNode, upIndice, userStructure, pathMap) )
+            pathMap(upIndice, nodeIndice) = upNode;
+            pathMap(downIndice, upNode) = userStructure.nullValue;                
+        end
+%         nodeIndice
+        %nodeIndice
+        pathMap(5, nodeIndice) = 1; %He is visited
+        pathMap = buildPathForOneNode(leftNode, userStructure, environment, pathMap);
+        pathMap = buildPathForOneNode(rightNode, userStructure, environment, pathMap);
+        pathMap = buildPathForOneNode(downNode, userStructure, environment, pathMap);
+        pathMap = buildPathForOneNode(upNode, userStructure, environment, pathMap);
+    end
+end
+
+
 function isInside = IsInsideObstacle(x, y, obstacleMap)
     obstSize = size(obstacleMap);
     isInside = 0;
