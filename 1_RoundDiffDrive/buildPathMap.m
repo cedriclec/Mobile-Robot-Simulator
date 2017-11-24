@@ -47,9 +47,13 @@ function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, p
         nodeToExplore = zeros(1,nbNode);
         i = 1;
         nodeToExplore(i) = nodeIndice;
+        remainNodesForNextIteration = i;
+        currentIterationNodesDone = 0;
+        costCurrent = 1;
         lastFreeSpace = i + 1;
         while ( (i <= nbNode) && (nodeToExplore(i) ~= 0) )
             nodeIndice = nodeToExplore(i);
+            
             if (  ( (testIfInsideeMap(nodeIndice, userStructure)) == 0) || (pathMap(5, nodeIndice)) )
                 i = i + 1;
             else
