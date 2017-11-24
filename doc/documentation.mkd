@@ -6,18 +6,16 @@
 
 1. Do the path planning
     
-    1. Generate path between each node
-    1. Delete path which cross obstacles
-    1. Choice one techniques    
+    1. Add cost of each node in the path (How far from the goal)
+    1. Swap to begin as goal and start as end
+    1. Add an end function when reach the goal
     1. Choice only path from begin to end
     1. Choice only shortest path
-    *    (Should be done in the userInit file)
+    *    (Should be done in the userInit file NOT TRUE)
  
-
 1. PlotAll
 
-    * Add the obstacleMap to see if path planing avoid obstacle (Well constructed)
-    * Add the path planning
+    * Add different colour for chosen path
 
 1. Do the control part
 
@@ -36,13 +34,23 @@
 1. PlotAll
 
     * Add the obstacle map to the plot All
+    * Add the obstacleMap to see if path planing avoid obstacle (Well constructed)
+    * Add the path planning
 
 1. Do the path planning
 
     1. Generate every nodes
     1. Delete node which are in obstacle
+    1. Generate path between each node
+    1. Delete path which cross obstacles
+    1. Choice one techniques (Dikstra)
+
+
 
 ##Variables
+pathMap = [LeftNode RightNode DownNode UpNode VisitedBool Cost]
+nodeMap = [xPos yPos StartBool GoalBool]
+
 #### Model
 
 
