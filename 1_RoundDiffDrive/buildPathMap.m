@@ -25,8 +25,6 @@ end
 function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, pathMap)
     %Iterative way
     
-     %TODO add COUT A LA MATRICE
-     %TODO INCREMENT AT EACH CALL FUNCTION
     visitedIndice = 5;
 
     if (  ( (testIfInsideeMap(nodeIndice, userStructure)) == 0) || (pathMap(visitedIndice, nodeIndice)) )
@@ -43,9 +41,7 @@ function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, p
         downIndice = 3;
         upIndice = 4;
         costIndice = 6;
-        
-        
-        
+
         
         nbNode = size(pathMap,2);
         nodeToExplore = zeros(1,nbNode);

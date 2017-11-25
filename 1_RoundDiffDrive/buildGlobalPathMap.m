@@ -1,4 +1,4 @@
-function globalPathMap = buildGlobalPathMap(model, environment, userStructure)
+function globalPathMap = buildGlobalPathMap(environment, userStructure)
      goalPoint = findGoalRobotPosition(userStructure);
      globalPathMap = buildAllPath(goalPoint, userStructure, environment);
 end
@@ -20,6 +20,9 @@ function pathMap=buildAllPath(nodeIndice, userStructure, environment)
     nbNode = size(userStructure.nodeMap,2);
     pathMap = zeros(6, nbNode);
     pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, pathMap);
+    
+    %%Added for try
+    pathMap = createEveryLinkBetweenNode(pathMap, userStructure, environment);
 end
 
 function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, pathMap)
@@ -41,7 +44,7 @@ function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, p
         downIndice = 3;
         upIndice = 4;
         costIndice = 6;
-        
+
         nbNode = size(pathMap,2);
         nodeToExplore = zeros(1,nbNode);
         i = 1;
@@ -49,7 +52,7 @@ function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, p
         nodesForNextIteration = 0;
         nodesForCurrentIteration = 1;
         currentIterationNodesDone = 0;
-        costCurrent = 0;
+        costCurrent = 1;
         lastFreeSpace = i + 1;
         while ( (i <= nbNode) && (nodeToExplore(i) ~= 0) )
             nodeIndice = nodeToExplore(i);
@@ -171,7 +174,7 @@ function haveReachedStartPoint = checkIfhaveReachedStartPoint(nodeIndice, userSt
     haveReachedStartPoint = 0;
     if ( currentNode == 1 )
         haveReachedStartPoint = 1;
-        userStructure.nodeMap(:, nodeIndice)
+        userStructure.nodeMap(:, nodeIndice);
     end 
 end
 
@@ -187,5 +190,29 @@ function value = calcGap(direction, userStructure, environment)
             value = nbNodeHauteur;
         case 'down'
             value = - nbNodeHauteur;
+    end
+end
+
+function pathMap = createEveryLinkBetweenNode(pathMap, userStructure, environment)
+    %Have to implement this function to recreate every limk between Nodes
+
+    sizeMap = size(pathMap,2);
+    leftGap = calcGap('left', userStructure, environment);
+    rightGap = calcGap('right', userStructure, environment);
+    downGap = calcGap('down', userStructure, environment);
+    upGap = calcGap('up', userStructure, environment);
+    for i = 1 : sizeMap
+        if (pathMap(1,i) == -100)
+            pathMap(1,i) = i + leftGap;
+        end
+        if (pathMap(2,i) == -100)
+            pathMap(2,i) = i + rightGap;
+        end
+        if (pathMap(3,i) == -100)
+            pathMap(3,i) = i + downGap;
+        end
+        if (pathMap(4,i) == -100)
+            pathMap(4,i) = i + upGap;
+        end
     end
 end

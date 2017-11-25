@@ -21,9 +21,9 @@ function plotAll(model, env, userStructure)
     
     
     %Comment Them if you want control faster
-    drawObstacle(userStructure);
-    drawNodes(userStructure);
-    drawGlobalPath(userStructure);
+    %drawObstacle(userStructure);
+    %drawNodes(userStructure);
+    %drawGlobalPath(userStructure);
     drawOptimalPath(userStructure);
     hold off;
     axis equal;
@@ -160,8 +160,18 @@ function drawNodes(userStructure)
 end
 
 function drawOptimalPath(userStructure)
-    return ;
+    pathMap = userStructure.idealPathMap;
+    node = userStructure.nodeMap;
+    pathSize = size(pathMap);
+    for i = 2:pathSize(2)
+        if(pathMap(1,i) > 0 ) %pathMap(1,i) ~= userStructure.endIdealPath
+            plot([node(1,pathMap(1,i-1)),node(1,pathMap(1,i))], [node(2,pathMap(1,i-1)),node(2,pathMap(1,i))],'c--');
+        end
+    end
+    
+    return;
 end
+
 
 function drawGlobalPath(userStructure)
     pathMap = userStructure.globalPathMap;
@@ -170,9 +180,6 @@ function drawGlobalPath(userStructure)
     for i = 1:pathSize(2)
         for j = 1 : 4
             if(pathMap(j,i) > 0 )
-                tmp = pathMap(6,i);
-                tmp;
-                nbColor = 7;
                 if( mod(pathMap(6,i),7) == 1 )
                     plot([node(1,i),node(1,pathMap(j,i))], [node(2,i),node(2,pathMap(j,i))],'m--');
                 elseif( mod(pathMap(6,i),7) == 2 )
