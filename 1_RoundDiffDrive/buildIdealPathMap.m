@@ -39,7 +39,7 @@ function idealPath = buildIdealPath(startPoint, userStructure, environment)
 
     while( ( (i < nbNode) && (i > 0) ) && ( checkIfhaveReachedGoal(nextNode, userStructure) == 0) )% && 0
         nextNode = takeMinCostNextNode(nextNode, userStructure);
-        idealPath(i) = nextNode;
+        idealPath(1, i) = nextNode;
         i = i + 1;
     end
    
@@ -49,6 +49,7 @@ end
 function haveReachedGoal = checkIfhaveReachedGoal(nodeIndice ,userStructure)
     haveReachedGoal = 0;
     goalIndice = 4;
+    nodeIndice
     if (userStructure.nodeMap(goalIndice, nodeIndice) == 1)
         haveReachedGoal= 1;
     end
