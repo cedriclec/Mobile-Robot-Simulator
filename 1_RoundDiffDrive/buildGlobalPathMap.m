@@ -1,6 +1,6 @@
-function pathMap = buildPathMap(model, environment, userStructure)
+function globalPathMap = buildGlobalPathMap(model, environment, userStructure)
      goalPoint = findGoalRobotPosition(userStructure);
-     pathMap = buildAllPath(goalPoint, userStructure, environment);
+     globalPathMap = buildAllPath(goalPoint, userStructure, environment);
 end
 
 function goalPoint = findGoalRobotPosition(userStructure)
@@ -24,9 +24,7 @@ end
 
 function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, pathMap)
     %Iterative way
-    
-     %TODO add COUT A LA MATRICE
-     %TODO INCREMENT AT EACH CALL FUNCTION
+
     visitedIndice = 5;
 
     if (  ( (testIfInsideeMap(nodeIndice, userStructure)) == 0) || (pathMap(visitedIndice, nodeIndice)) )
@@ -44,9 +42,6 @@ function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, p
         upIndice = 4;
         costIndice = 6;
         
-        
-        
-        
         nbNode = size(pathMap,2);
         nodeToExplore = zeros(1,nbNode);
         i = 1;
@@ -54,11 +49,11 @@ function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, p
         nodesForNextIteration = 0;
         nodesForCurrentIteration = 1;
         currentIterationNodesDone = 0;
-        costCurrent = 1;
+        costCurrent = 0;
         lastFreeSpace = i + 1;
         while ( (i <= nbNode) && (nodeToExplore(i) ~= 0) )
             nodeIndice = nodeToExplore(i);
-            if ( currentIterationNodesDone > nodesForCurrentIteration)
+            if ( currentIterationNodesDone >= nodesForCurrentIteration)
                 costCurrent = costCurrent + 1;
                 currentIterationNodesDone = 0;
                 nodesForCurrentIteration = nodesForNextIteration;
@@ -68,11 +63,7 @@ function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, p
             if (  ( (testIfInsideeMap(nodeIndice, userStructure)) == 0) || (pathMap(visitedIndice, nodeIndice)) )
                 i = i + 1;
                 currentIterationNodesDone = currentIterationNodesDone + 1;
-%             elseif (  checkIfhaveReachedStartPoint(nodeIndice, userStructure) )
-%                 %Stop advancing this way we reach the starting point and have a path
-%                 i = i + 1;
-%                 currentIterationNodesDone = currentIterationNodesDone + 1;
-%                 
+         
             else
                 %Left case
                 leftNode = nodeIndice + leftGap;
@@ -80,10 +71,13 @@ function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, p
                     pathMap(leftIndice, nodeIndice) = leftNode;
                     pathMap(rightIndice, leftNode) = userStructure.nullValue;
                     
-                    nodeToExplore(lastFreeSpace) = leftNode;
-                    lastFreeSpace = lastFreeSpace + 1;
+                     if ( checkIfhaveReachedStartPoint(nodeIndice, userStructure) == 0)
+                        nodeToExplore(lastFreeSpace) = leftNode;
+                        lastFreeSpace = lastFreeSpace + 1;
+                        nodesForNextIteration = nodesForNextIteration + 1;
+                     end
+                  
                     
-                    nodesForNextIteration = nodesForNextIteration + 1;
                     
                     pathMap(costIndice, nodeIndice) = costCurrent;
                 end
@@ -92,11 +86,13 @@ function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, p
                 if (testIfhaveToAddNextNode(nodeIndice, rightNode, rightIndice, userStructure, pathMap) )
                     pathMap(rightIndice, nodeIndice) = rightNode;
                     pathMap(leftIndice, rightNode) = userStructure.nullValue;
+
+                     if ( checkIfhaveReachedStartPoint(nodeIndice, userStructure) == 0)
+                        nodeToExplore(lastFreeSpace) = rightNode;
+                        lastFreeSpace = lastFreeSpace + 1;
+                        nodesForNextIteration = nodesForNextIteration + 1;
+                     end
                     
-                    nodeToExplore(lastFreeSpace) = rightNode;
-                    lastFreeSpace = lastFreeSpace + 1;
-                    
-                    nodesForNextIteration = nodesForNextIteration + 1;
                     
                     pathMap(costIndice, nodeIndice) = costCurrent;
                 end
@@ -106,10 +102,12 @@ function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, p
                     pathMap(downIndice, nodeIndice) = downNode;
                     pathMap(upIndice, downNode) = userStructure.nullValue;
                     
-                    nodeToExplore(lastFreeSpace) = downNode;
-                    lastFreeSpace = lastFreeSpace + 1;
+                     if ( checkIfhaveReachedStartPoint(nodeIndice, userStructure) == 0)
+                        nodeToExplore(lastFreeSpace) = downNode;
+                        lastFreeSpace = lastFreeSpace + 1;
+                        nodesForNextIteration = nodesForNextIteration + 1;
+                     end
                     
-                    nodesForNextIteration = nodesForNextIteration + 1;
                     
                     pathMap(costIndice, nodeIndice) = costCurrent;
                 end
@@ -119,10 +117,13 @@ function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, p
                     pathMap(upIndice, nodeIndice) = upNode;
                     pathMap(downIndice, upNode) = userStructure.nullValue;
                     
-                    nodeToExplore(lastFreeSpace) = upNode;
-                    lastFreeSpace = lastFreeSpace + 1;
+                     if ( checkIfhaveReachedStartPoint(nodeIndice, userStructure) == 0)
+                        nodeToExplore(lastFreeSpace) = upNode;
+                        lastFreeSpace = lastFreeSpace + 1;
+                        nodesForNextIteration = nodesForNextIteration + 1;
+                    end
                     
-                    nodesForNextIteration = nodesForNextIteration + 1;
+             
                     
                     pathMap(costIndice, nodeIndice) = costCurrent;
                 end
@@ -168,9 +169,9 @@ end
 function haveReachedStartPoint = checkIfhaveReachedStartPoint(nodeIndice, userStructure)
     currentNode = userStructure.nodeMap(3, nodeIndice);
     haveReachedStartPoint = 0;
-    
     if ( currentNode == 1 )
         haveReachedStartPoint = 1;
+        userStructure.nodeMap(:, nodeIndice)
     end 
 end
 

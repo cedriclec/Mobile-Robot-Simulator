@@ -12,12 +12,12 @@ function userStructure = userInit(model, environment)
     %0.5 good for hard
     %0.75 good for easy
     %0.8 good for moderate
-    userStructure.nodeInterval.max = 1;
+    userStructure.nodeInterval.max =0.5;
     userStructure.nodeInterval.epsilon = 0.05;
     userStructure.nodeInterval.current = userStructure.nodeInterval.max;
 
     userStructure.nodeMap = buildNodeMap(model, environment, userStructure); %Matrix for the map
-    userStructure.pathMap = buildPathMap(model, environment, userStructure); %Matrix for the map
+    userStructure.globalPathMap = buildGlobalPathMap(model, environment, userStructure); %Matrix for the map
     plotAll(model, environment, userStructure)
     userStructure.pathPlanning = [1,2;3,4]; %Matrix for the map
     pause(3);

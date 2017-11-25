@@ -21,9 +21,10 @@ function plotAll(model, env, userStructure)
     
     
     %Comment Them if you want control faster
-    drawObstacle(userStructure)
-    drawNodes(userStructure)
-    drawPath(userStructure)
+    drawObstacle(userStructure);
+    drawNodes(userStructure);
+    drawGlobalPath(userStructure);
+    drawOptimalPath(userStructure);
     hold off;
     axis equal;
     axis(env.plotArea);
@@ -158,17 +159,41 @@ function drawNodes(userStructure)
     return;
 end
 
-function drawPath(userStructure)
-    pathMap = userStructure.pathMap;
+function drawOptimalPath(userStructure)
+    return ;
+end
+
+function drawGlobalPath(userStructure)
+    pathMap = userStructure.globalPathMap;
     node = userStructure.nodeMap;
     pathSize = size(pathMap);
     for i = 1:pathSize(2)
         for j = 1 : 4
             if(pathMap(j,i) > 0 )
-                plot([node(1,i),node(1,pathMap(j,i))], [node(2,i),node(2,pathMap(j,i))],'c--');
+                tmp = pathMap(6,i);
+                tmp;
+                nbColor = 7;
+                if( mod(pathMap(6,i),7) == 1 )
+                    plot([node(1,i),node(1,pathMap(j,i))], [node(2,i),node(2,pathMap(j,i))],'m--');
+                elseif( mod(pathMap(6,i),7) == 2 )
+                    plot([node(1,i),node(1,pathMap(j,i))], [node(2,i),node(2,pathMap(j,i))],'g--');
+                elseif( mod(pathMap(6,i),7) == 3 )
+                    plot([node(1,i),node(1,pathMap(j,i))], [node(2,i),node(2,pathMap(j,i))],'b--');
+                elseif( mod(pathMap(6,i),7) == 4 )
+                    plot([node(1,i),node(1,pathMap(j,i))], [node(2,i),node(2,pathMap(j,i))],'y--');
+                elseif( mod(pathMap(6,i),7) == 5 )
+                    plot([node(1,i),node(1,pathMap(j,i))], [node(2,i),node(2,pathMap(j,i))],'r--');
+                elseif( mod(pathMap(6,i),7) == 6 )
+                    plot([node(1,i),node(1,pathMap(j,i))], [node(2,i),node(2,pathMap(j,i))],'c--');
+                elseif( mod(pathMap(6,i),7) == 7 )
+                    plot([node(1,i),node(1,pathMap(j,i))], [node(2,i),node(2,pathMap(j,i))],'k--');          
+                else
+                    plot([node(1,i),node(1,pathMap(j,i))], [node(2,i),node(2,pathMap(j,i))],'c--');
+                end
             end
         end
     end
     
     return;
 end
+
