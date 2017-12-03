@@ -3,7 +3,6 @@
 ##Todo
 
 
-
 1. Do the path planning
     
     1. Add cost of each node in the path (How far from the goal)
@@ -47,6 +46,18 @@
 
 
 
+
+
+##Path Planning
+    
+   1. Find one node which start from robot
+   1. Start Function oneNodePath
+   2. Add four nodes around (Verify if they are available)
+   3. Write in next node that this direction is done
+   4. Write in current node that he is done
+   5. Call oneNodePath on every nextNode
+   
+   
 ##Variables
 pathMap = [LeftNode RightNode DownNode UpNode VisitedBool Cost]
 nodeMap = [xPos yPos StartBool GoalBool]
