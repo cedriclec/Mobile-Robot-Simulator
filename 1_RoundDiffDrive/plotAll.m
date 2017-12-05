@@ -24,7 +24,7 @@ function plotAll(model, env, userStructure)
     %drawObstacle(userStructure);
     %drawNodes(userStructure);
     %drawGlobalPath(userStructure);
-    drawOptimalPath(userStructure);
+    %drawOptimalPath(userStructure);
     hold off;
     axis equal;
     axis(env.plotArea);

@@ -4,7 +4,7 @@
 
 function [u, userStructure] = userCtrl(model, environment, userStructure)
 
-    %Solution 1 choosen
+    %Solution 1 choose
     % 1. Stop robot
     % 2. Turn robot to be in front of next Node
     % 1. Stop robot
@@ -13,7 +13,7 @@ function [u, userStructure] = userCtrl(model, environment, userStructure)
     %Solution 2 not choose
     % 1. PID
 
-    %Solution 3 choose
+    %Solution 3 not choose
     % 1. Turn robot until Robot inclination is 0 or 180 (according to x)
     % 1. Move Forward until xRobot = xPosition
     % 2. Turn until Robot inclination is +90 or -90 (according to y)
@@ -37,29 +37,6 @@ function [u, userStructure] = userCtrl(model, environment, userStructure)
     %pause(1)
 end
 
-function [uCalc, userStructure]  = calcU(model, userStructure)
-    %have to move forward robot
-    [vel, angelv] = testInternet(model, userStructure);
-
-    %Velocity PID
-    uvel = ([vel;vel]-[model.state(4);model.state(5)])* userStructure.velPID;
-    
-    %Angular Velocity PID
-    u1ang = (angelv - (model.state(3))) * userStructure.angvelPID;
-    u2ang = -u1ang.Kp;
-    
-    u1 = cell2mat(uvel.Numerator(1)) * u1ang.Kp;
-    u2 = cell2mat(uvel.Numerator(2)) * u2ang;
-    
-    uCalc = [u1 u2];
-end
-
-
-function [vel,angvel] = testInternet(model, userStructure)
-%https://www.mathworks.com/help/robotics/examples/path-following-for-a-differential-drive-robot.html?s_tid=gn_loc_drop
-    %Try with different parameters
-    [vel,angvel] = userStructure.controller(model.state(1:3));
-end
 
 
 function currentNode = getCurrentNode(userStructure)
@@ -71,7 +48,7 @@ end
 function [uCalc, userStructure]  = calcU2(model, userStructure)
     if(userStructure.currentUobjectif == 0)
         %Finish
-        uCalc = [0 0];
+        uCalc = [-model.state(4) -model.state(5)];
     elseif (userStructure.currentUobjectif == 1)
         %have to stop robot
         [uCalc, userStructure] = calcUtoStopRobot(model, userStructure);
@@ -231,15 +208,18 @@ function userStructure = goToNextNode(userStructure)
     userStructure.pathPlanning(1, userStructure.currentNodeInPath);
     currentNode = userStructure.pathPlanning(1, userStructure.currentNodeInPath);
     %Little Hack Improve this one TODO
-    if (currentNode == 0)
-       display("Hack for reach the goal")
-       %currentNode =  
-    end
-    userStructure = updateNodeMapObjectifNode(userStructure, previousNode ,currentNode);
-    prev = userStructure.nodeMap(5,previousNode);
-    prev
-    suiv = userStructure.nodeMap(5,currentNode);
-    suiv
+     if (currentNode == 0)
+        display("Hack for reach the goal") %TODO Improve this
+        userStructure.currentNodeInPath  = 0;
+%        %currentNode =
+     else
+        userStructure = updateNodeMapObjectifNode(userStructure, previousNode ,currentNode);
+        prev = userStructure.nodeMap(5,previousNode);
+        prev
+        suiv = userStructure.nodeMap(5,currentNode);
+        suiv
+     end
+
 end
 
 function userStructure = updateNodeMapObjectifNode(userStructure, previousNode, currentNode)
@@ -271,7 +251,7 @@ function robotIsNearObjective = checkIfRobotPositionEqualsNodeObjective(model, u
     
 %     posWanted
     %tolerance = model.radius;
-    tolerance = 0.3
+    tolerance = 0.2; %TODO 0.3 works really well
     if( (posRobot(1) < (currentNode(1) + tolerance) ) && (posRobot(1) > (currentNode(1) - tolerance) ) )
         if( (posRobot(2) < (currentNode(2) + tolerance) ) && (posRobot(2) > (currentNode(2) - tolerance) ) )
 %         if( (posRobot(1) > (currentNode(1) + tolerance) ) && (posRobot(1) < (currentNode(1) - tolerance) ) )
@@ -284,82 +264,4 @@ function robotIsNearObjective = checkIfRobotPositionEqualsNodeObjective(model, u
     %pause(2);
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-function uCalcCACA = calcUNUL(model, userStructure)
-    robotState = model.state;
-    currentPathIndice = userStructure.currentNodeInPath;
-    objectiveNodeIndice = userStructure.pathPlanning(1,currentPathIndice);
-    objectivePosition = userStructure.nodeMap(1:2, objectiveNodeIndice);
-    
-    Binv = inverseB(userStructure.B);
-    tmpX = calcTmpX(model, objectivePosition, robotState);
-%     tmpX
-    uCalc = Binv*tmpX;
-%     uCalc
-end
-
-
-
-
-function Binv = inverseB(B)
-    Binv = inv(B' * B) * B';
-end
-
-function tmpX = calcTmpX(model, Xwanted, Xprev)
-%TODO Find better name
-    Xwant = zeros(5,1);%Try with zeros in other state
-    Xwant(1:2) = Xwanted;
-    
-    %Get from TA Code
-    dt = 0.01;
-    Xprev(1) = dt * ((Xprev(4)+Xprev(5))/2*cos(Xprev(3)));
-    Xprev(2) = dt * ((Xprev(4)+Xprev(5))/2*sin(Xprev(3)));
-    Xprev(3) = dt * ((Xprev(5)-Xprev(4))/model.track);
-    Xprev(4) = 0;
-    Xprev(5) = 0;
-%     Xwant
-%     Xprev
-    tmpX = Xwant - Xprev';
-%     tmpX
-    
-    %ADDED SHOULD NOT WORK
-%     tmpX(4) = tmpX(2);
-%     tmpX(5) = tmpX(1);
-%       tmpX(4:5) = tmpX(1:2);
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function X = getX(model, environment)
-    % X = [x y ? vleft v right]
-    
-end
 

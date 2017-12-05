@@ -99,9 +99,9 @@ function [uStopRobot, userStructure] = calcUtoStopRobot(model, userStructure)
         userStructure.currentUobjectif = userStructure.currentUobjectif + 1;
         %userStructure.currentUobjectif = 3;
     else
-        %Try 
-           velLeft = - model.state(4) * 10;
-           velRight = - model.state(5)* 10;
+        %Try to accerate the slowing
+           velLeft = - model.state(4) * 100;
+           velRight = - model.state(5)* 100;
            uStopRobot = [velLeft velRight];
     end
 end
@@ -136,28 +136,32 @@ end
 function [utoTurn, userStructure] = calcUtoTurn(model, userStructure)
     display("calcUtoTurn")
     tolerance = 0.1;
-    acceleration = 5;
+    acceleration = userStructure.angleVelocity;
     %If aleft = model.state(4) < 0 => Move vers bas
 
     inclinationNextNode = calcinclinationNextNode(model, userStructure);
     inclinationDifference = calcinclinationDifference(model, inclinationNextNode);
     inclinationDifference = inclinationDifference;% * abs(inclinationDifference);
+    inclinationDifference
     if (inclinationDifference < 0)
+    %if (inclinationDifference < 3)
         acceleration = -acceleration;
     end
     %u1 same sign as inclinationDifference
     if ( robotIsSlow(model) )
         %No speed launch acceleration
         display("robotIsSlow")
-
-        u1 = acceleration;
-        u2 = - u1;
+        u1 = acceleration - model.state(4);
+        u2 = - acceleration - model.state(5);
     elseif(abs(inclinationDifference < tolerance))
 %         u1 = - acceleration;% * model.state(4);
 %         u2 = - u1;
-        u1 = -  model.state(4);% * model.state(4);
-        u2 = - model.state(5);
-        
+
+            %TODO KEEP THIS ONE WORK FOR ALL EXEPT HARD
+%         u1 = -  model.state(4);% * model.state(4);
+%         u2 = - model.state(5);
+         u1 = -  model.state(4) * 10;% * model.state(4);
+         u2 = - model.state(5) * 10;
         %TMP TEST
         %userStructure.currentUobjectif = userStructure.currentUobjectif + 1;
 %     elseif ( (model.state(4) > 0) && (inclinationDifference < 0) )
@@ -199,7 +203,12 @@ function inclinationNextNode = calcinclinationNextNode(model, userStructure)
     pointObjectif = userStructure.nodeMap(1:2, userStructure.pathPlanning(1, userStructure.currentNodeInPath));
     oppose = pointObjectif(2) - pointRobot(2);
     adjacent = pointObjectif(1) - pointRobot(1);
-    angleObjectif = atan(oppose/adjacent);
+%     oppose
+%     adjacent
+%     angleObjectif = atan(oppose/adjacent);
+    angleObjectif = atan2(oppose, adjacent);
+    
+    
     inclinationNextNode = angleObjectif;
 %     pause(5);
 end
@@ -221,6 +230,13 @@ function userStructure = goToNextNode(userStructure)
     userStructure.currentNodeInPath  = userStructure.currentNodeInPath + 1;
     userStructure.pathPlanning(1, userStructure.currentNodeInPath);
     currentNode = userStructure.pathPlanning(1, userStructure.currentNodeInPath);
+    %Little Hack Improve this one TODO
+    if (currentNode == -1)
+       display("Hack for reach the goal")
+       %currentNode =
+    else
+        
+    end
     userStructure = updateNodeMapObjectifNode(userStructure, previousNode ,currentNode);
     prev = userStructure.nodeMap(5,previousNode);
     prev

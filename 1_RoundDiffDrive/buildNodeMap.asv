@@ -43,7 +43,7 @@ function nodeMap = buildNodeMap(model, environment, userStructure)
 
         end
      end
-     nodeMap(1:2, 1) = environment.stateGoal(1:2);
+     nodeMap(4, currentNode) = 0;
 
 end
 

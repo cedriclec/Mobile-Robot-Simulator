@@ -17,7 +17,7 @@ function userStructure = userInit(model, environment)
     %0.75 good for easy
     %0.8 good for moderate
     userStructure.nodeInterval.max = 0.25; %0.25 for easy and hard 
-    userStructure.nodeInterval.max = 0.4; %0.4 for moderate
+    userStructure.nodeInterval.max = 0.25; %0.4 for moderate and easy
     userStructure.nodeInterval.epsilon = 0.05;
     userStructure.nodeInterval.current = userStructure.nodeInterval.max;
     

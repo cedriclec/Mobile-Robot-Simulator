@@ -42,7 +42,7 @@ function idealPath = buildIdealPath(startPoint, userStructure, environment)
         idealPath(1, i) = nextNode;
         i = i + 1;
     end
-    idealPath(1, i) = nextNode; %add The goal
+    idealPath(1, i) = 1; %add The goal
    
     
 end
