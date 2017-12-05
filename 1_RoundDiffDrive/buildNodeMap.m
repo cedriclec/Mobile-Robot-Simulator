@@ -11,7 +11,9 @@ function nodeMap = buildNodeMap(model, environment, userStructure)
      xMin = xMin + startGap ;  
      yMin = yMin + startGap;
 
-     nodeMap = zeros(4, nbNode);
+     nodeMap = zeros(5, nbNode);
+     %TODO add it to doc
+     %nodeMap(5) = 1 Objectif for robot control
 
      currentNode = 0;
      for i = xMin : distBetweenNode : xMax
@@ -27,14 +29,18 @@ function nodeMap = buildNodeMap(model, environment, userStructure)
                  %currentNode = currentNode + 1;
                 nodeMap(2, currentNode) = j;
             end
-                 %currentNode = currentNode + 1;
-                nodeMap(3, currentNode) = 0; %Not visited
-                 %currentNode = currentNode + 1;
-                if (isNearRobot(i, j, model))
+            
+                if (isNearObjective(i, j, model.state, model))
+                    nodeMap(3, currentNode) = 1;
+                else
+                    nodeMap(3, currentNode) = 0;
+                end
+                if (isNearObjective(i, j, environment.stateGoal, model))
                     nodeMap(4, currentNode) = 1;
                 else
                     nodeMap(4, currentNode) = 0;
                 end
+
         end
      end
 

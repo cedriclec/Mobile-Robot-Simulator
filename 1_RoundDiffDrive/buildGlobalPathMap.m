@@ -161,6 +161,7 @@ function insideMap = testIfInsideeMap(nodeIndice, userStructure)
 end
 
 function noObstacle = testIfNoObstacle(nodeIndice, userStructure)
+    
     currentNode = userStructure.nodeMap(1:2, nodeIndice);
     noObstacle = 0;
     

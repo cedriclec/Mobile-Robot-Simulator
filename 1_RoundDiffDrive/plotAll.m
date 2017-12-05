@@ -148,9 +148,11 @@ function drawNodes(userStructure)
     nodeSize = size(node);
     for i = 1:nodeSize(2)
         if(node(3,i))
-            plot(node(1,i),node(2,i),'g*');
+             plot(node(1,i),node(2,i),'g*');
         elseif(node(4,i))
             plot(node(1,i),node(2,i),'y*');
+        elseif(node(5,i))
+            plot(node(1,i),node(2,i),'k*');
         else
             plot(node(1,i),node(2,i),'r*');
         end

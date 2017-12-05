@@ -18,6 +18,7 @@ function isInside = IsInsideObstacle(model, x, y, environment)
         vehicle_ObstacleLine_dist = point_line_segment_dist(firstPointOfObstacleLine, secondPointOfObstacleLine, currVehiclePos);
         
         % 2) Determine wheter the distance is shorter than Vehicle Radious
+        %radius = model.radius ; ; %+ 0.4; %TODO TODO DELETE IF POSSIBLE QND CHECK IF WORK ZITH EVERY MAP
         if(vehicle_ObstacleLine_dist <= model.radius)
             isInside = 1;
             return;

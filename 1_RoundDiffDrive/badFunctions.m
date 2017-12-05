@@ -59,6 +59,23 @@ function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, p
     end
 end
 
+function [u, userStructure] = userCtrl(model, environment, userStructure)
+
+    % previously defined value as an example at userInit function
+    % used as a global variable, so that this will change as 0, 1, 2, ....
+    % at every iteration
+    %userStructure.exampleVariable = userStructure.exampleVariable + 1;
+    
+    % control input example
+    u = [0.5; -0.5];
+    if(environment.time < 5)
+        u = [0.5; -0.5];
+    elseif(environment.time < 15)
+        u = [0; 0.5];
+    else
+        u = [-0.3; 0];
+    end
+end
 
 function isInside = IsInsideObstacle(x, y, obstacleMap)
     obstSize = size(obstacleMap);
@@ -151,4 +168,30 @@ function obstacleMap2 = buildObstacleMap2(model, environment)
          
          %obstacleMap(i+(j-1)*(nbRow)) = environment.corner(i+(j-1)*(nbRow)) - radius
      end
+end
+
+function Xnext = calcX(X, U, model)
+    % X = [x y ? vleft v right]
+    % CF projet pdf for explanation on equation
+
+  Xnext = zeros(size(X),1);
+  vleft = X(4);
+  vright = X(5);
+  theta = X(3);
+  
+  aleft = U(1);
+  aright = U(2);
+  
+  d = model.radius; %Check if true
+  Xnext(1) = ( ( vleft + vright )* cos(theta) ) /2;
+  Xnext(2) = ( ( vleft + vright )* sin(theta) ) /2;
+  Xnext(3) = (vright - vleft)/d;
+  
+end
+
+function Y = calcY(X, U)
+    %Y = [X Y]
+    Y = zeros(2,1);
+    Y(1) = X(1);
+    Y(2) = X(2);
 end
