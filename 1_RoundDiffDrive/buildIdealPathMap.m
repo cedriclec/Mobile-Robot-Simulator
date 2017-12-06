@@ -14,17 +14,9 @@ function startPoint = findStartRobotPosition(userStructure)
         end
         i = i + 1;
     end
-%     startPoint
-%     %HACK Cause path neighbor are -100
-     %startPoint = startPoint + 1;
-%     startPoint
 end
 
-function idealPath = buildIdealPath(startPoint, userStructure, environment)
-    %======CACA
-    %IdealPath(node) = [nextNode traveledBool]
-    %IdealPath(1) = [startPoint 0]
-    
+function idealPath = buildIdealPath(startPoint, userStructure, environment)  
     %===========Better
     %IdealPath(i) = [currentNode traveledBool]
     %IdealPath(i + 1) = [nextNode 0]
@@ -32,7 +24,6 @@ function idealPath = buildIdealPath(startPoint, userStructure, environment)
     idealPath = zeros(2, nbNode);
     i = 1;
     
-    %startPoint = 248; %Delete it qfter
     idealPath(i) = startPoint;
     nextNode = startPoint;
     
@@ -50,7 +41,6 @@ end
 function haveReachedGoal = checkIfhaveReachedGoal(nodeIndice ,userStructure)
     haveReachedGoal = 0;
     goalIndice = 4;
-    nodeIndice
     if (userStructure.nodeMap(goalIndice, nodeIndice) == 1)
         haveReachedGoal= 1;
     end

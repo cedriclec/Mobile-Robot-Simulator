@@ -8,14 +8,14 @@ function userStructure = userInit(model, environment)
     userStructure.nullValue = -100;
     userStructure.endIdealPath = -50000;
     
-    userStructure.toleranceStateRobot = 0.2
+    userStructure.toleranceStateRobot = 0.2;
         
     userStructure.nodeInterval.min = 0.25; %Can not be smaller, otherwise size problem to build the matrix of zeros
-    %0.5 good for hard
-    %0.75 good for easy
-    %0.8 good for moderate
-    %userStructure.nodeInterval.max = 0.25; %0.25 for easy and hard 
-    userStructure.nodeInterval.max = 0.25; %0.4 for moderate and easy
+
+    %userStructure.nodeInterval.max = 0.25; %0.4 for moderate initial map
+    %0.25 for easy and hard intial map and every testMap
+    userStructure.nodeInterval.max = 0.25; 
+    
     userStructure.nodeInterval.current = userStructure.nodeInterval.max;
     
 
@@ -24,9 +24,7 @@ function userStructure = userInit(model, environment)
     userStructure.idealPathMap = buildIdealPathMap(environment, userStructure);
     userStructure.currentNodeInPath = 1;
     
-    %To Delete
-    userStructure.currentNodeInPath = userStructure.currentNodeInPath + 1;
-    
+    %-1 = Init
     %0 = Finish
     %1 = Stop
     %2 = Turn
@@ -35,21 +33,11 @@ function userStructure = userInit(model, environment)
     
     userStructure.velocity = 0.25;
     userStructure.angleVelocity = 0.3;
-    
-    
-    %userStructure.angleVar = 1
-    %mapAllNode = getAllNode(userStructure);
-   % userStructure.mapAllNode = mapAllNode;
 
     
     plotAll(model, environment, userStructure);
-    pause(15);
     userStructure.pathPlanning = userStructure.idealPathMap; %Matrix for the map
     
-    
-    %HACK INIT A VALUE
-    model.state(4:5) = [1 1]
-%    userStructure.exampleVariable = 0;
     
     for i = 1:3
         'Hello World!'

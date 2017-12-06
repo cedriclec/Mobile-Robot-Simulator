@@ -18,15 +18,12 @@ end
 
 function pathMap=buildAllPath(nodeIndice, userStructure, environment)
     nbNode = size(userStructure.nodeMap,2);
-    
-    %TODO DELETE IF NOT CECESSQRY
-    nbNode = nbNode * 2;
+        nbNode = nbNode * 2;
     
     
     pathMap = zeros(6, nbNode);
     pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, pathMap);
     
-    %%Added for try
     pathMap = createEveryLinkBetweenNode(pathMap, userStructure, environment);
 end
 
@@ -59,7 +56,6 @@ function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, p
         currentIterationNodesDone = 0;
         costCurrent = 1;
         lastFreeSpace = i + 1;
-        nbNode
         while ( (i <= nbNode) && (nodeToExplore(i) ~= 0) )
             nodeIndice = nodeToExplore(i);
             if ( currentIterationNodesDone >= nodesForCurrentIteration)
@@ -137,15 +133,13 @@ function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, p
                     pathMap(costIndice, nodeIndice) = costCurrent;
                 end
 
-                pathMap(visitedIndice, nodeIndice) = 1; %He is visited
+                pathMap(visitedIndice, nodeIndice) = 1; %It is visited
 
                 i = i + 1;
                 currentIterationNodesDone = currentIterationNodesDone + 1;
             end
         end
         
-            i
-            nbNode
     end
 end
 
@@ -158,7 +152,6 @@ function haveToAddNextNode = testIfhaveToAddNextNode(nodeIndice, nextNodeIndice,
             end
         end
     end
-    %haveToAddNextNode = ( (pathMap(nodeDirectionIndice, nodeIndice) == 0) & testIfNoOutsideMap(nextNodeIndice, userStructure) & testIfNoObstacle(nextNodeIndice, userStructure) );
 end
 
 function insideMap = testIfInsideeMap(nodeIndice, userStructure)
@@ -189,7 +182,7 @@ function haveReachedStartPoint = checkIfhaveReachedStartPoint(nodeIndice, userSt
 end
 
 function value = calcGap(direction, userStructure, environment)
-    distHauteur = abs(environment.plotArea(1) - environment.plotArea(2)); % TODO Check if right order (It it is not 1,2)
+    distHauteur = abs(environment.plotArea(1) - environment.plotArea(2));
     nbNodeHauteur = distHauteur / userStructure.nodeInterval.current;
     switch direction
         case 'left'
@@ -204,7 +197,7 @@ function value = calcGap(direction, userStructure, environment)
 end
 
 function pathMap = createEveryLinkBetweenNode(pathMap, userStructure, environment)
-    %Have to implement this function to recreate every limk between Nodes
+    %Have to implement this function to recreate every link between Nodes
 
     sizeMap = size(pathMap,2);
     leftGap = calcGap('left', userStructure, environment);

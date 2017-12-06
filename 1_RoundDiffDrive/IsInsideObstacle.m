@@ -1,6 +1,4 @@
 %Taken from TA Code
-%If time try to reimplment it = Using point on a segment (Given by
-%obstacleMap)
 
 function isInside = IsInsideObstacle(model, x, y, environment)
     

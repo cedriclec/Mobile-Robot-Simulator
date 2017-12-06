@@ -12,7 +12,6 @@ function nodeMap = buildNodeMap(model, environment, userStructure)
      yMin = yMin + startGap;
 
      nodeMap = zeros(5, nbNode);
-     %TODO add it to doc
      %nodeMap(5) = 1 Objectif for robot control
 
      currentNode = 0;
@@ -22,11 +21,9 @@ function nodeMap = buildNodeMap(model, environment, userStructure)
             isInside = IsInsideObstacle(model, i,j,environment);
             if (isInside == 1)
                 nodeMap(1, currentNode) = -100;
-                %currentNode = currentNode + 1;
                 nodeMap(2, currentNode) = -100;
             else
                 nodeMap(1, currentNode) = i;
-                 %currentNode = currentNode + 1;
                 nodeMap(2, currentNode) = j;
             end
             

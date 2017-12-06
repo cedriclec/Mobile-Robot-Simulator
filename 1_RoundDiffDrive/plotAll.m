@@ -21,7 +21,10 @@ function plotAll(model, env, userStructure)
     
     
     %Comment Them if you want control faster
+    
+    %Enlarge the obstacles around 
     %drawObstacle(userStructure);
+    
     %drawNodes(userStructure);
     %drawGlobalPath(userStructure);
     drawOptimalPath(userStructure);
@@ -166,7 +169,7 @@ function drawOptimalPath(userStructure)
     node = userStructure.nodeMap;
     pathSize = size(pathMap);
     for i = 2:pathSize(2)
-        if(pathMap(1,i) > 0 ) %pathMap(1,i) ~= userStructure.endIdealPath
+        if(pathMap(1,i) > 0 ) 
             plot([node(1,pathMap(1,i-1)),node(1,pathMap(1,i))], [node(2,pathMap(1,i-1)),node(2,pathMap(1,i))],'c--');
         end
     end

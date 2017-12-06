@@ -6,7 +6,6 @@ function obstacleMap = buildObstacleMap(model, environment)
      obstacleMap = zeros(nbPointPerCol, nbCol * 16); %4 caus each line give one square (4 lines of each 2 points => 4 * 2 *2)
      radius = model.radius;
      
-%     %TODO : Check if it is not ouside
      xMin = environment.plotArea(1);
      xMax = environment.plotArea(2);
      yMin = environment.plotArea(3);
@@ -14,13 +13,11 @@ function obstacleMap = buildObstacleMap(model, environment)
      
     for j = 0 : nbCol - 1 
          i = 0;
-         %Todo put it in a function => More proper
          pointA = [environment.corner(j*nbPointPerCol + 1) environment.corner(j*nbPointPerCol + 2)];
          pointB = [environment.corner(j*nbPointPerCol + 3) environment.corner(j*nbPointPerCol + 4)];
          
          points = calcPointsObstacle(pointA, pointB, radius);
          %Left
-         %Todo put it in a function => More redable
          obstacleMap(j*nbPointPerColForObs  + 1 + i*nbPointPerCol) = points(1); %environment.corner(j*nbPointPerCol + 1) - radius;
          obstacleMap(j*nbPointPerColForObs  + 2 + i*nbPointPerCol) = points(2);% environment.corner(j*nbPointPerCol + 2) + radius;
          obstacleMap(j*nbPointPerColForObs  + 3 + i*nbPointPerCol) = points(3); %environment.corner(j*nbPointPerCol + 1) - radius;
