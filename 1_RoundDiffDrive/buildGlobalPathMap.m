@@ -18,6 +18,11 @@ end
 
 function pathMap=buildAllPath(nodeIndice, userStructure, environment)
     nbNode = size(userStructure.nodeMap,2);
+    
+    %TODO DELETE IF NOT CECESSQRY
+    nbNode = nbNode * 2;
+    
+    
     pathMap = zeros(6, nbNode);
     pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, pathMap);
     
@@ -54,6 +59,7 @@ function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, p
         currentIterationNodesDone = 0;
         costCurrent = 1;
         lastFreeSpace = i + 1;
+        nbNode
         while ( (i <= nbNode) && (nodeToExplore(i) ~= 0) )
             nodeIndice = nodeToExplore(i);
             if ( currentIterationNodesDone >= nodesForCurrentIteration)
@@ -137,6 +143,9 @@ function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, p
                 currentIterationNodesDone = currentIterationNodesDone + 1;
             end
         end
+        
+            i
+            nbNode
     end
 end
 

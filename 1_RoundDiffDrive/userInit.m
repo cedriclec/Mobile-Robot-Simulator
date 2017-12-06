@@ -9,16 +9,13 @@ function userStructure = userInit(model, environment)
     userStructure.endIdealPath = -50000;
     
     userStructure.toleranceStateRobot = 0.2
-    
-    userStructure.B = [0 0; 0 0; 0 0; 1 0; 0 1];
-    
+        
     userStructure.nodeInterval.min = 0.25; %Can not be smaller, otherwise size problem to build the matrix of zeros
     %0.5 good for hard
     %0.75 good for easy
     %0.8 good for moderate
-    userStructure.nodeInterval.max = 0.25; %0.25 for easy and hard 
+    %userStructure.nodeInterval.max = 0.25; %0.25 for easy and hard 
     userStructure.nodeInterval.max = 0.25; %0.4 for moderate and easy
-    userStructure.nodeInterval.epsilon = 0.05;
     userStructure.nodeInterval.current = userStructure.nodeInterval.max;
     
 
@@ -38,29 +35,16 @@ function userStructure = userInit(model, environment)
     
     userStructure.velocity = 0.25;
     userStructure.angleVelocity = 0.3;
-    %userStructure.angleVar = 1;
-    mapAllNode = getAllNode(userStructure);
-    userStructure.mapAllNode = mapAllNode;
-    userStructure.controller = robotics.PurePursuit('DesiredLinearVelocity', 0.5, 'Waypoints', mapAllNode, 'MaxAngularVelocity', 2);
-       
-    %Velocity PID Initial conditions
-    userStructure.velPIDVal.Kp = 1;
-    userStructure.velPIDVal.Ki = 0;
-    userStructure.velPIDVal.Kd = 0;
-    userStructure.velPIDVal.errorPrior = 0;
-    userStructure.velPIDVal.integral = 0;
-    userStructure.velPID = pid(userStructure.velPIDVal.Kp, userStructure.velPIDVal.Ki,  userStructure.velPIDVal.Kd );
-    %Angular Velocity PID Initial conditions
-    userStructure.angVelPIDVal.Kp = 20;
-    userStructure.angVelPIDVal.Ki = 0;
-    userStructure.angVelPIDVal.Kd = 0;
-    userStructure.angVelPIDVal.errorPrior = 0;
-    userStructure.angVelPIDVal.integral = 0;
-    userStructure.angvelPID = pid(userStructure.angVelPIDVal.Kp, userStructure.angVelPIDVal.Ki,  userStructure.angVelPIDVal.Kd );
+    
+    
+    %userStructure.angleVar = 1
+    %mapAllNode = getAllNode(userStructure);
+   % userStructure.mapAllNode = mapAllNode;
+
     
     plotAll(model, environment, userStructure);
+    pause(15);
     userStructure.pathPlanning = userStructure.idealPathMap; %Matrix for the map
-    %pause(3);
     
     
     %HACK INIT A VALUE

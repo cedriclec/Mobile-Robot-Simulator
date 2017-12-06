@@ -52,6 +52,8 @@ function pathMap = buildPathForOneNode(nodeIndice, userStructure, environment, p
         currentIterationNodesDone = 0;
         costCurrent = 1;
         lastFreeSpace = i + 1;
+        i
+
         while ( (i <= nbNode) && (nodeToExplore(i) ~= 0) )
             nodeIndice = nodeToExplore(i);
             if ( currentIterationNodesDone > nodesForCurrentIteration)
